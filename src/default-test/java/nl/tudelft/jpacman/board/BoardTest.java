@@ -53,4 +53,24 @@ class BoardTest {
     void testSquareAt(int x, int y) {
         assertThat(board.squareAt(x, y)).isEqualTo(grid[x][y]);
     }
+
+    @Test
+    void testSquareAt() {
+        Square[][] grid = new Square[1][1];
+        BasicSquare square = new BasicSquare();
+        grid[0][0] = square;
+
+        Board board = new Board(grid);
+
+        assertThat(board.squareAt(0, 0)).isEqualTo(square);
+    }
+
+    @Test
+    void testSquareAtNull() {
+        Square[][] grid = new Square[1][1];
+
+        Board board = new Board(grid);
+
+        assertThat(board.squareAt(0, 0)).isNull();
+    }
 }
