@@ -6,6 +6,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 /**
  * Test various aspects of board.
@@ -69,8 +71,19 @@ class BoardTest {
     void testSquareAtNull() {
         Square[][] grid = new Square[1][1];
 
-        Board board = new Board(grid);
+        assertThrows(AssertionError.class, () -> new Board(grid));
+    }
 
-        assertThat(board.squareAt(0, 0)).isNull();
+    @ParameterizedTest
+    @CsvSource({
+        "0, 0, true",
+        "1, 2, true",
+        "-1, 0, false",
+        "2, 0, false",
+        "0, -1, false",
+        "0, 3, false"
+    })
+    void testWithinBorders(int x, int y, boolean expected) {
+        assertThat(board.withinBorders(x, y)).isEqualTo(expected);
     }
 }
